@@ -5,12 +5,17 @@ import "./Search.css";
 
 import Selector from "./Selector/Selector";
 
+import { Button } from "@mui/material";
+
 function Search(props) {
   const [allMovies, setAllMovies] = useState([]);
   const [moviesGenres, setMoviesGenres] = useState({});
   const [uniqueGenres, setUniqueGenres] = useState([]);
   const [uniqueYears, setUniqueYears] = useState([]);
   const [uniqueRating, setUniqueRating] = useState([]);
+
+  const years = ["1900-1950", "1950-1970", "1970-1990", "1990-2000", "2000-2010", "2010-2023"];
+  const ratings = ["0-4", "5-6", "7-8", "9-10"];
 
   const options = {
     method: "GET",
@@ -80,11 +85,10 @@ function Search(props) {
   return (
     <div className="filter-body">
         <h1 className="header">Set the movie filters:</h1>
-      <div className="selector">
           <Selector className = "option" name="Genre" unique={uniqueGenres}/>
-          <Selector className = "option" name="Time" unique={uniqueYears}/>
-          <Selector className = "option" name="Rating" unique={uniqueRating}/>
-      </div>
+          <Selector className = "option" name="Time" unique={years}/>
+          <Selector className = "option" name="Rating" unique={ratings}/>
+        <Button variant="filled" sx={{color: "white", backgroundColor:"rgb(0, 136, 255)", marginTop: "40px", "&:hover": {backgroundColor: "rgb(126, 128, 248)",}}}>Randomize</Button>
     </div>
   );
 }

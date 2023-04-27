@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <body>
-      <style>{'body { background-color: rgb(100, 100, 100); }'}</style>
+      <style>{'body { background-color: rgb(0, 1, 72); }'}</style>
     <div className="page-body">
       <Search />
     </div>
