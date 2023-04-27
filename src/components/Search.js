@@ -8,7 +8,7 @@ import "./Search.css";
 import { Button } from "@mui/material";
 
 function Search(props) {
-  const [allMovies, setAllMovies] = useState([]);
+  const [allMovies, setAllMovies] = useState({});
   const [moviesGenres, setMoviesGenres] = useState({});
   const [uniqueGenres, setUniqueGenres] = useState([]);
   const [uniqueYears, setUniqueYears] = useState([]);
@@ -45,23 +45,23 @@ function Search(props) {
     }));
   };
 
-  const addMovieToYears = (year, movie) => {
-    if (finalYears[year]?.has(movie)) { // if movie is already there return
+  const addMovieToYears = (movie, year) => {
+    if (finalYears[movie]?.has(year)) { // if movie is already there return
         return;
     }
     setFinalYears((prevState) => ({
       ...prevState,
-      [year]: [...(prevState[year] || []), movie],
+      [movie]: [year],
     }));
   };
 
-  const addMovieToRatings = (rating, movie) => {
-    if (finalRatings[rating]?.has(movie)) { // if movie is already there return
+  const addMovieToRatings = (movie, rating) => {
+    if (finalRatings[movie]?.has(rating)) { // if movie is already there return
         return;
     }
     setFinalRatings((prevState) => ({
       ...prevState,
-      [rating]: [...(prevState[rating] || []), movie],
+      [movie]: [rating],
     }));
   };
 
@@ -69,7 +69,7 @@ function Search(props) {
     axios
       .request(options)
       .then((response) => {
-        setAllMovies(response.data);
+        setAllMovies(response.data)
         const movieGenre = {};
         const genreMovie={};
         for (let i = 0; i < response.data.length; i++) {
@@ -78,8 +78,8 @@ function Search(props) {
             // genreMovie[response.data[i].genre[j]] = response.data[i].title;
             addMovieToGenre(response.data[i].genre[j], response.data[i].title);
           }
-          addMovieToYears(response.data[i].year, response.data[i].title);
-          addMovieToRatings(response.data[i].rating, response.data[i].title);
+          addMovieToYears(response.data[i].title, response.data[i].year);
+          addMovieToRatings(response.data[i].title, response.data[i].rating);
         }
         // setFinalGenres(genreMovie);
         // setMoviesGenres(movieGenre);
@@ -126,16 +126,52 @@ function Search(props) {
     getAllMovies();
   }, []);
 
-  console.log(finalRatings);
-  const generateRandomMovie = () => {}
+//   console.log(finalRatings);
+  const generateRandomMovie = (genre, year, rating) => {
+    if(genre === "" || year === "" || rating === ""){return;}
+    // console.log("GENRE:" + genre);
+    // console.log("YEAR:" + year.slice(5,9)); // slicing (0 4) , (5 9)
+    // console.log("RATING:" + rating.slice(2,3)); // slicing (0 1), (2 3)
+    const yearFirst = parseInt(year.slice(0,4));
+    const yearSecond = parseInt(year.slice(5,9));
+    const ratingFirst = parseInt(rating.slice(0,1));
+    const ratingSecond = parseInt(rating.slice(2,3));
 
+    const givenMovies = finalGenres[genre];
+    let firstResult = "";
+    let secondResult = "";
+    let finalResult = "";
+    for(let i = 0; i < givenMovies.length; i++){
+        const single = givenMovies[i];
+        console.log(single);
+        console.log(finalYears[single]); // TODO: GIVES UNDEFINED
+        console.log(finalRatings[single]); // TODO: GIVES UNDEFINED
+        if(parseInt(single.year) <= yearSecond && parseInt(single.year) >= parseInt(yearFirst)){
+            firstResult = single;
+            if(parseInt(single.rating) <= ratingSecond && parseInt(single.rating) >= ratingFirst){
+                secondResult = single;
+                break;
+            }
+        }
+    }
+    if(secondResult !== ""){
+        finalResult = secondResult;
+    }
+    else if(firstResult !== ""){
+        finalResult = firstResult;
+    }
+    else{
+        finalResult = "No movie based on given API";
+    }
+    //console.log(finalResult);
+  }
   return (
     <div className="filter-body">
         <h1 className="header">Set the movie filters:</h1>
           <Selector className = "option" name="Genre" unique={uniqueGenres} selected={selectedGenre} setSelected={setSelectedGenre}/>
           <Selector className = "option" name="Time" unique={years} selected={selectedYear} setSelected={setSelectedYear}/>
           <Selector className = "option" name="Rating" unique={ratings} selected={selectedRating} setSelected={setSelectedRating}/>
-        <Button variant="filled" onClick={generateRandomMovie} sx={{color: "white", backgroundColor:"rgb(0, 136, 255)", marginTop: "40px", "&:hover": {backgroundColor: "rgb(126, 128, 248)",}}}>Randomize</Button>
+        <Button variant="filled" onClick={generateRandomMovie(selectedGenre, selectedYear, selectedRating)} sx={{color: "white", backgroundColor:"rgb(0, 136, 255)", marginTop: "40px", "&:hover": {backgroundColor: "rgb(126, 128, 248)",}}}>Randomize</Button>
     </div>
   );
 }

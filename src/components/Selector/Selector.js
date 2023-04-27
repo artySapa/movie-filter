@@ -10,40 +10,40 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import './Selector.css'
 
 function Selector(props) {
-    return (
-      <div className="select-body">
-        <h2>{props.name}:</h2>
-        <Box sx={{ minWidth: "50%", color: "black" }}>
-          <FormControl sx={{ width: "100%", color: "black", marginLeft: "25px" }}>
-            <InputLabel
-              id="demo-simple-select-label"
-              sx={{ width: "100%", color: "black" }}
-            ></InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Genre"
-              value={props.selected}
-              onChange={(e) => {
-                props.setSelected(e.target.value);
-              }}
-              sx={{
-                width: "50%",
-                color: "black",
-                backgroundColor: "rgb(242, 190, 19)",
-                marginTop: "5px",
-              }}
-            >
-              {props.unique.map((genre, i) => (
-                <MenuItem key={i} value={genre}>
-                  {genre}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
-      </div>
-    );
-  }
+  return (
+    <div className="select-body">
+      <h2>{props.name}:</h2>
+      <Box sx={{ minWidth: "50%", color: "black" }}>
+        <FormControl sx={{ width: "100%", color: "black", marginLeft: "25px" }}>
+          <InputLabel
+            id="demo-simple-select-label"
+            sx={{ width: "100%", color: "black" }}
+          ></InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="Genre"
+            value={props.selected}
+            onChange={(e) => {
+              props.setSelected(e.target.value);
+            }}
+            sx={{
+              width: "50%",
+              color: "black",
+              backgroundColor: "rgb(242, 190, 19)",
+              marginTop: "5px",
+            }}
+          >
+            {props.unique.map((genre, i) => (
+              <MenuItem key={i} value={genre}>
+                {genre}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+    </div>
+  );
+}
 
 export default Selector;
