@@ -24,6 +24,7 @@ function Search(props) {
 
   const [response, setResponse] = useState("");
   const [expanded, setExpanded] = useState(false); // TODO: change it to the router function
+  const [movieData, setMovieData] = useState({});
 
   const years = [
     "1900-1950",
@@ -134,8 +135,16 @@ function Search(props) {
   };
 
   useEffect(() => {
-    getAllMovies();
+    getAllMovies();;
   }, []);
+
+  useEffect(() => {
+    console.log(movieData);
+  }, [movieData]);
+
+  useEffect(() => {
+    console.log(response);
+  }, [response]);
 
   const generateRandomMovie = (genre, year, rating) => {
     if (genre === "" || year === "" || rating === "") {
@@ -186,8 +195,22 @@ function Search(props) {
     return finalResult[randIndex];
   };
 
+  const findMovieData = (movie) => {
+    const tempMovieData = {};
+    for (let i = 0; i < allMovies.length; i++) {
+      tempMovieData[allMovies[i].title] = [];
+      tempMovieData[allMovies[i].title].push(allMovies[i].image);
+      tempMovieData[allMovies[i].title].push(allMovies[i].description);
+      tempMovieData[allMovies[i].title].push(allMovies[i].trailer);
+    }
+    setMovieData(tempMovieData);
+
+    console.log(movieData[movie]);
+  }
+
   return (
     <div className="filter-body">
+        <div>
       <h1 className="header">Set the movie filters:</h1>
       <Selector
         className="option"
@@ -214,7 +237,8 @@ function Search(props) {
         variant="filled"
         onClick={() => {
           setResponse(generateRandomMovie(selectedGenre, selectedYear, selectedRating));
-          console.log(response);
+          findMovieData(response);
+          setExpanded(true);
         }}
         sx={{
           color: "white",
@@ -225,6 +249,26 @@ function Search(props) {
       >
         Randomize
       </Button>
+      </div>
+      
+
+      {
+            expanded &&
+            <div className="random-result">
+                <p>{response}</p>
+                <img src={movieData[response][0]} alt="No internet connection"></img>
+                <p>{movieData[response][1]}</p>
+                <iframe 
+                    width="560" 
+                    height="315" 
+                    src={movieData[response][2]} 
+                    title="YouTube video player" 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowFullScreen
+                />
+            </div>
+      }
     </div>
   );
 }

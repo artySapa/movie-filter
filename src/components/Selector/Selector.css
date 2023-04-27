@@ -2,10 +2,11 @@
 .select-body{
     display: flex;
     flex-direction: column;
-    margin-left: 30%;
+    margin-left: 0%;
     margin-bottom: 15px;
     text-align: left;
     color: rgb(255, 255, 255);
     font-family: 'Noto Sans', sans-serif;
     font-family: 'Ubuntu', sans-serif;
+    transform: translateX(20%);
 }
