@@ -14,6 +14,8 @@ function Search(props) {
   const [uniqueYears, setUniqueYears] = useState([]);
   const [uniqueRating, setUniqueRating] = useState([]);
 
+  const [finalGenres, setFinalGenres] = useState({});
+
   const years = ["1900-1950", "1950-1970", "1970-1990", "1990-2000", "2000-2010", "2010-2023"];
   const ratings = ["0-4", "5-6", "7-8", "9-10"];
 
@@ -27,15 +29,31 @@ function Search(props) {
     },
   };
 
+  const addMovieToGenre = (genre, movie) => {
+    if (finalGenres[genre]?.has(movie)) { // if movie is already there return
+        return;
+    }
+    setFinalGenres((prevState) => ({
+      ...prevState,
+      [genre]: [...(prevState[genre] || []), movie],
+    }));
+  };
+
   const getAllMovies = () => {
     axios
       .request(options)
       .then((response) => {
         setAllMovies(response.data);
         const movieGenre = {};
+        const genreMovie={};
         for (let i = 0; i < response.data.length; i++) {
           movieGenre[response.data[i].title] = response.data[i].genre;
+          for (let j = 0; j < response.data[i].genre.length; j++) {
+            // genreMovie[response.data[i].genre[j]] = response.data[i].title;
+            addMovieToGenre(response.data[i].genre[j], response.data[i].title)
+          }
         }
+        // setFinalGenres(genreMovie);
         setMoviesGenres(movieGenre);
 
         const unique = [];
@@ -80,7 +98,8 @@ function Search(props) {
     getAllMovies();
   }, []);
 
-  console.log(moviesGenres);
+  console.log(finalGenres);
+  const generateRandomMovie = () => {}
 
   return (
     <div className="filter-body">
@@ -88,7 +107,7 @@ function Search(props) {
           <Selector className = "option" name="Genre" unique={uniqueGenres}/>
           <Selector className = "option" name="Time" unique={years}/>
           <Selector className = "option" name="Rating" unique={ratings}/>
-        <Button variant="filled" sx={{color: "white", backgroundColor:"rgb(0, 136, 255)", marginTop: "40px", "&:hover": {backgroundColor: "rgb(126, 128, 248)",}}}>Randomize</Button>
+        <Button variant="filled" onClick={generateRandomMovie} sx={{color: "white", backgroundColor:"rgb(0, 136, 255)", marginTop: "40px", "&:hover": {backgroundColor: "rgb(126, 128, 248)",}}}>Randomize</Button>
     </div>
   );
 }
