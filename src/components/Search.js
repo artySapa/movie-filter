@@ -9,6 +9,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 function Search(props) {
   const [allMovies, setAllMovies] = useState([]);
+  const [moviesGenres, setMoviesGenres] = useState({});
+  const [uniqueGenres, setUniqueGenres] = useState([]);
 
   const options = {
     method: "GET",
@@ -25,6 +27,27 @@ function Search(props) {
       .request(options)
       .then((response) => {
         setAllMovies(response.data);
+        const movieGenre = {};
+        for (let i = 0; i < response.data.length; i++) {
+          movieGenre[response.data[i].title] = response.data[i].genre;
+        }
+        setMoviesGenres(movieGenre);
+
+        const unique = [];
+
+        for (let i = 0; i < response.data.length; i++) {
+            for (let j = 0; j < response.data[i].genre.length; j++) {
+              const genre = response.data[i].genre[j];
+              // Check if the genre is already in the uniqueGenres array
+              if (!unique.includes(genre)) {
+                // If the genre is not already in the array, add it
+                unique.push(genre);
+              }
+            }
+          }
+
+          setUniqueGenres(unique);
+
       })
       .catch(console.error);
   };
@@ -33,7 +56,7 @@ function Search(props) {
     getAllMovies();
   }, []);
 
-  console.log(allMovies);
+  console.log(moviesGenres);
 
   return (
     <div>
@@ -44,7 +67,11 @@ function Search(props) {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label="Age"
-          ></Select>
+          >
+            {uniqueGenres.map((genre, i) => (
+              <MenuItem key={i}>{genre}</MenuItem>
+            ))}
+          </Select>
         </FormControl>
       </Box>
     </div>
