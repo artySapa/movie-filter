@@ -143,12 +143,12 @@ function Search(props) {
     let finalResult = "";
     for(let i = 0; i < givenMovies.length; i++){
         const single = givenMovies[i];
-        console.log(single);
-        console.log(finalYears[single]); // TODO: GIVES UNDEFINED
-        console.log(finalRatings[single]); // TODO: GIVES UNDEFINED
-        if(parseInt(single.year) <= yearSecond && parseInt(single.year) >= parseInt(yearFirst)){
+        // console.log(single);
+        // console.log(finalYears[single]); // TODO: GIVES UNDEFINED
+        // console.log(finalRatings[single]); // TODO: GIVES UNDEFINED
+        if(parseInt(finalYears[single][0]) <= yearSecond && parseInt(finalYears[single][0]) >= parseInt(yearFirst)){
             firstResult = single;
-            if(parseInt(single.rating) <= ratingSecond && parseInt(single.rating) >= ratingFirst){
+            if(parseInt(finalRatings[single][0]) <= ratingSecond && parseInt(finalRatings[single][0]) >= ratingFirst){
                 secondResult = single;
                 break;
             }
@@ -163,7 +163,7 @@ function Search(props) {
     else{
         finalResult = "No movie based on given API";
     }
-    //console.log(finalResult);
+    console.log(finalResult);
   }
   return (
     <div className="filter-body">
