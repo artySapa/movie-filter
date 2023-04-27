@@ -1,0 +1,7 @@
+.select-body{
+    display: flex;
+    flex-direction: column;
+    margin-left: 30%;
+    margin-bottom: 15px;
+    text-align: left;
+}

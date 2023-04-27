@@ -1,0 +1,27 @@
+.filter-body{
+    margin:auto;
+    margin-top: 10%;
+    text-align: center;
+    background-color: rgb(0, 1, 72);
+    border-radius: 15px;
+    width: 30%;
+}
+
+.selector{
+    display: flex;
+    flex-direction: column;
+    color:white;
+    padding: 30px;
+    padding-top: 0;
+}
+
+.option {
+    display: flex;
+    flex-direction: row;
+}
+
+.header{
+    color: white;
+    margin-top: 20px;
+    padding-top: 50px;
+}
