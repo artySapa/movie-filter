@@ -228,10 +228,6 @@ function Search(props) {
   };
 
   const findMovieData = (movie) => {
-    if(movie === ""){
-        setExpanded(false);
-        return;
-    }
     const tempMovieData = {};
     for (let i = 0; i < allMovies.length; i++) {
       tempMovieData[allMovies[i].title] = [];
@@ -290,7 +286,8 @@ function Search(props) {
       >
         Randomize
       </Button>
-      { expanded && movieData.length > 1 &&
+      
+      { expanded &&
       <Button
         variant="filled"
         onClick={() => {
@@ -311,7 +308,7 @@ function Search(props) {
 
 
       {
-            expanded && movieData.length > 1 &&
+            expanded &&
             <div className="random-result">
                 <h1 className="header-res">{response}</h1>
                 <div className="image-description">
