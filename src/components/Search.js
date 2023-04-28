@@ -93,6 +93,10 @@ function Search(props) {
     axios
       .request(options)
       .then((response) => {
+        if (response.data.length === 0) {
+            console.log("No movie based on given API");
+            return;
+          }
         setAllMovies(response.data);
         const movieGenre = {};
         const genreMovie = {};
@@ -119,17 +123,6 @@ function Search(props) {
         }
         setUniqueGenres(unique);
 
-        const uniqueYear = [];
-        for (let i = 0; i < response.data.length; i++) {
-          const year = response.data[i].year;
-          // Check if the genre is already in the unique array
-          if (!uniqueYear.includes(year)) {
-            // If the genre is not already in the array, add it
-            uniqueYear.push(year);
-          }
-        }
-        setUniqueYears(uniqueYear.sort());
-
         const uniqueRating = [];
         for (let i = 0; i < response.data.length; i++) {
           const year = response.data[i].rating;
@@ -149,31 +142,12 @@ function Search(props) {
   }, []);
 
   useEffect(() => {
-    console.log(movieData);
-  }, [movieData]);
-
-  useEffect(() => {
-    console.log(response);
-  }, [response]);
-
-  useEffect(() => {
-    console.log(expanded);
-  }, [expanded]);
-
-  useEffect(() => {
-    console.log(firstYear);
-  }, [firstYear, value]);
-
-  useEffect(() => {
-    console.log(secondYear);
-  }, [secondYear]);
-
-  useEffect(() => {
-    console.log(selectedYear);
-  }, [selectedGenre, selectedYear, selectedRating, finalGenres, finalRatings, finalYears, response]);
+    console.log("logging");
+  }, [selectedGenre, selectedYear, selectedRating, finalGenres, finalRatings, finalYears, response, firstYear, secondYear, value, expanded, response, movieData]);
 
   const generateRandomMovie = (genre, year, rating) => {
     if (genre === "" || firstYear === 0 || secondYear === 0 || rating === "") {
+        setExpanded(false);
         alert("Please fill out the filters :)");
         return "";
     }
@@ -213,11 +187,13 @@ function Search(props) {
     } else if (firstResult !== []) {
       finalResult = firstResult; //change to Second result
     } else {
+    setExpanded(false);
       alert("No movie based on given API");
       return "";
     }
 
     if(finalResult.length === 0){
+        setExpanded(false);
         alert("No movie based on given API");
         return "";
     }
@@ -243,7 +219,7 @@ function Search(props) {
   return (
     <div className="filter-body">
         <div>
-      <h1 className="header">Set the movie filters:</h1>
+            <h1 className="header">What would you like to watch?</h1>
       <Selector
         className="option"
         name="Genre"
@@ -252,7 +228,7 @@ function Search(props) {
         setSelected={setSelectedGenre}
       />
       <h1 className="time-header">Time (1950-2023): </h1>
-      <Box sx={{ width: 130, margin: "auto", padding:"10px", backgroundColor:"rgb(242, 190, 19)", borderRadius: "15px"}}>
+      <Box sx={{ width: 200, marginLeft: "98px", padding:"10px", backgroundColor:"rgb(242, 190, 19)", borderRadius: "15px"}}>
       <Slider
         getAriaLabel={() => 'Ages range'}
         value={value}
@@ -273,9 +249,9 @@ function Search(props) {
       <Button
         variant="filled"
         onClick={() => {
+          setExpanded(true);
           setResponse(generateRandomMovie(selectedGenre, selectedYear, selectedRating));
           findMovieData(response);
-          setExpanded(true);
         }}
         sx={{
           color: "white",
