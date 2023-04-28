@@ -14,10 +14,10 @@ function Selector(props) {
     <div className="select-body">
       <h2>{props.name}:</h2>
       <Box sx={{ minWidth: "50%", color: "black" }}>
-        <FormControl sx={{ width: "100%", color: "black", marginLeft: "25px" }}>
+        <FormControl sx={{ width: "100%", color: "black", marginLeft:"12px" }}>
           <InputLabel
             id="demo-simple-select-label"
-            sx={{ width: "100%", color: "black" }}
+            sx={{ width: "100%", color: "black"}}
           ></InputLabel>
           <Select
             labelId="demo-simple-select-label"
@@ -32,6 +32,7 @@ function Selector(props) {
               color: "black",
               backgroundColor: "rgb(242, 190, 19)",
               marginTop: "5px",
+              borderRadius:"15px"
             }}
           >
             {props.unique.map((genre, i) => (

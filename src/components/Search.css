@@ -17,10 +17,12 @@
 }
 
 p{
+    max-width: 500px;
     color: white;
     font-size: larger;
     font-family: 'Noto Sans', sans-serif;
     font-family: 'Ubuntu', sans-serif;
+    margin: 50px;
 }
 
 .option {
@@ -40,4 +42,36 @@ p{
     .filter-body {
         width: 100%;
     }
+}
+
+img{
+    box-shadow: 0 0 10px 10px pink;
+    margin-bottom: 10px;
+}
+
+.header-res{
+    color: white;
+}
+
+iframe{
+    margin-bottom: 300px;
+}
+
+
+.image-description {
+    margin: 40px;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200&family=Ubuntu:wght@300&display=swap');
+.time-header{
+    color:white;
+    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
+    text-align: left;
+    transform: translateX(20%);
+    font-size: 25px;
 }
