@@ -9,3 +9,7 @@
 .logo-name{
   justify-content: left;
 }
+
+.logopic{
+transform: translateY(-1%);
+}
