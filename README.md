@@ -1,3 +1,11 @@
+
+# Film It
+
+This project is meant to be a useful tool for anyone who wants a simple random movie recommendation based on their preferences. Just fill out the filters, read the description, watch the trailer and decide if you want to watch it.
+
+https://user-images.githubusercontent.com/118086930/235322397-f943cc83-53b5-4d15-aba8-1446f09e9984.mp4
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
