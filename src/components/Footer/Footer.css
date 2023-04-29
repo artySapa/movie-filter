@@ -1,0 +1,46 @@
+.footer {
+    padding: 10px;
+    background-color: #0e1b42;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 13em;
+  }
+  
+  #foot {
+    color: rgb(192, 10, 10);
+  }
+  
+  a {
+    color: rgb(252, 91, 91);
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+    color: rgb(255, 177, 177);
+  }
+  
+  .footerEntry {
+    margin-right: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    text-decoration: none;
+  }
+  
+  .footerLink {
+    color: rgb(192, 10, 10);
+    margin: 15px;
+  }
+  
+  @media screen and (max-width: 1000px) {
+    .footer {
+      padding: 10px;
+      background-color: #0e1b42;
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      font-size: 10px;
+    }
+  }
+  

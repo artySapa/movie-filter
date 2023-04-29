@@ -3,6 +3,8 @@ import Search from "./components/Search";
 import popcorn from '../src/assets/popcorn.png';
 import "./App.css";
 
+import Footer from "./components/Footer/Footer";
+
 function App() {
   return (
     <body>
@@ -14,6 +16,7 @@ function App() {
       <div className="page-body">
         <Search />
       </div>
+      <Footer />
     </body>
   );
 }
